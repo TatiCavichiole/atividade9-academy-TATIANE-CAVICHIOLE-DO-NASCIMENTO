@@ -1,9 +1,3 @@
-# - Validar todos os atalhos do menu carrossel da homepage e botoes
-# - Validar o saldo e o histórico da conta e os botões disponíveis na tela
-# - Validar a tela de depósito e seus botões
-# - Validar a tela de Empréstimo e seus botões
-# - Validar a tela de Cartão de crédito e seus botões
-
 
 Funcionalidade: Validar todos os atalhos do menu carrossel da homepage e botões
     Como usuário do aplicativo
