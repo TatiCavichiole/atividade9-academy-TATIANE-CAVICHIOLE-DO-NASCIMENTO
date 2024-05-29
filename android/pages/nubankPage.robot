@@ -31,12 +31,15 @@ ${FUNCAO_SEGURO_VIDA}        xpath=//android.view.View[contains(@content-desc,"S
 ${FUNCAO_DESCUBRA_MAIS}      xpath=//android.view.View[@content-desc="Descubra mais"]
 ${FUNCAO_WHATSAPP}           xpath=//android.view.View[contains(@content-desc,"WhatsApp")]
 ${NOME_USUARIO}              xpath=//android.view.View[contains(@content-desc,"Olá, Breno Freitas")]
+${NOME_ESPERADO}             Olá, Breno Freitas
 ${CONTA_E_SALDO}             xpath=//android.view.View[contains(@content-desc,"Conta")]
 ${CARROSSEL_01}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[1]
 ${CARROSSEL_02}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[2]
 ${CARROSSEL_03}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[3]
 ${CARROSSEL_04}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
 ${MENU_CARROSSEL}            xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]
+${TELA_CONVITE}              xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
+
 
 *** Keywords ***
 
@@ -46,6 +49,7 @@ Dado que o usuário está na tela inicial do aplicativo
 
 Quando o usuário visualizar o menu carrossel
     Wait Until Element Is Visible    ${MENU_CARROSSEL}
+
 Então os atalhos "Pix", "Pagar", "Transferir", "Depositar", "Emprestimos", "Recarga celular", "Cobrar", "Doação" e "Encontar atalhos" devem estar presentes
     Element Should Be Visible    ${BUTTON_PIX} 
     Element Should Be Visible    ${BUTTON_PAGAR} 
@@ -56,3 +60,39 @@ Então os atalhos "Pix", "Pagar", "Transferir", "Depositar", "Emprestimos", "Rec
     Element Should Be Visible    ${BUTTON_DOACAO}
     Element Should Be Visible    ${BUTTON_ATALHOS}
     Element Should Be Visible    ${BUTTON_COBRAR}
+
+Quando o usuário visualizar a tela inicial
+    Wait Until Element Is Visible    ${TELA_INICIAL}
+    Element Should Be Visible    ${BUTTON_PERFIL}
+
+Então os atalhos "Meus cartoes", "Cartao de credito", "Emprestimos", "Investimentos", "Seguro de vida", "Descubra mais" devem estar presentes
+    Element Should Be Visible    ${CARD_MEUS_CARTOES} 
+    Element Should Be Visible    ${FUNCAO_CARTAO_CREDITO}
+    Element Should Be Visible    ${FUNCAO_EMPRESTIMO}  
+    Element Should Be Visible    ${BUTTON_DEPOSITAR}
+    Element Should Be Visible    ${BUTTON_EMPRESTIMOS}
+    Element Should Be Visible    ${FUNCAO_INVESTIMENTOS}
+    Element Should Be Visible    ${FUNCAO_SEGURO_VIDA}
+    Element Should Be Visible    ${FUNCAO_DESCUBRA_MAIS} 
+   
+Entao devera exibir o nome do usuario logado no App
+    [Arguments]    ${NOME_ESPERADO}
+    Element Should Be Visible    ${NOME_USUARIO}
+    ${nome_atual}    Get Element Attribute    ${NOME_USUARIO}    contentDescription
+    Should Be Equal    ${nome_atual}    ${NOME_ESPERADO}
+
+Quando o usuário clicar no botao de visualização do saldo
+    Espera o elemento e faz o click    ${BUTTON_OCULTAR_SALDO}
+    Verifica se contem o text no content-desc   ${CONTA_E_SALDO}    Conta R$ 181,79
+
+Então deverá ocultar o saldo
+    Verifica se não contem o text no content-desc    ${CONTA_E_SALDO}    Conta R$ 181,79
+
+Quando o usuário clicar no botao de indicar amigos
+    Espera o elemento e faz o click    ${BUTTON_CONVITE} 
+    
+Então deverá ser redirecionado para tela de convite
+    Wait Until Element Is Visible   ${TELA_CONVITE}  
+    Verifica se contem o text no content-desc   ${TELA_CONVITE}    Resgate seus amigos da fila do banco
+
+    
