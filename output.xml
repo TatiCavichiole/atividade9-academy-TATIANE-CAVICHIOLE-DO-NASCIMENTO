@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0 (Python 3.12.3 on win32)" generated="2024-05-29T15:42:09.662920" rpa="false" schemaversion="5">
+<suite id="s1" name="telaInicial" source="c:\Users\Tatiane\DEV\Raro-QA\Atividade 9\atividade9-academy-TATIANE-CAVICHIOLE-DO-NASCIMENTO\android\features\telaInicial.robot">
+<test id="s1-t1" name="CT002 - Verificar a presença de todos os atalhos no menu carrossel" line="13">
+<kw name="Open app" owner="config" type="SETUP">
+<kw name="Open Application" owner="AppiumLibrary">
+<arg>http://127.0.0.1:4723</arg>
+<arg>automationName=${ANDROID_AUTOMATION_NAME}</arg>
+<arg>platformName=${ANDROID_PLATFORM_NAME}</arg>
+<arg>platformVersion=${ANDROID_PLATFORM_VERSION}</arg>
+<arg>appActivity=${ANDROID_APP_ACTIVITY}</arg>
+<arg>appPackage=${ANDROID_APP_PACKAGE}</arg>
+<doc>Opens a new application to given Appium server.
+Capabilities of appium server, Android and iOS,
+Please check https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/server-args.md
+| *Option*            | *Man.* | *Description*     |
+| remote_url          | Yes    | Appium server url |
+| alias               | no     | alias             |
+| strict_ssl          | No     | allows you to send commands to an invalid certificate host like a self-signed one. |</doc>
+<status status="PASS" start="2024-05-29T15:42:09.846651" elapsed="9.151163"/>
+</kw>
+<status status="PASS" start="2024-05-29T15:42:09.846651" elapsed="9.151163"/>
+</kw>
+<kw name="Quando o usuário visualizar o menu carrossel" owner="nubankPage">
+<kw name="Wait Until Element Is Visible" owner="AppiumLibrary">
+<msg time="2024-05-29T15:42:19.669091" level="INFO">xpath criteria: //android.widget.ScrollView/android.widget.HorizontalScrollView[1]</msg>
+<arg>${MENU_CARROSSEL}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" start="2024-05-29T15:42:18.999874" elapsed="0.670217"/>
+</kw>
+<status status="PASS" start="2024-05-29T15:42:18.998871" elapsed="0.671220"/>
+</kw>
+<kw name="Então os atalhos &quot;Pix&quot;, &quot;Pagar&quot;, &quot;Transferir&quot;, &quot;Depositar&quot;, &quot;Emprestimos&quot;, &quot;Recarga celular&quot;, &quot;Cobrar&quot;, &quot;Doação&quot; e &quot;Encontar atalhos&quot; devem estar presentes" owner="nubankPage">
+<kw name="Element Should Be Visible" owner="AppiumLibrary">
+<msg time="2024-05-29T15:42:19.723675" level="INFO">xpath criteria: //android.view.View[@content-desc="Pix"]</msg>
+<arg>${BUTTON_PIX}</arg>
+<doc>Verifies that element identified with locator is visible.</doc>
+<status status="PASS" start="2024-05-29T15:42:19.671090" elapsed="0.052585"/>
+</kw>
+<kw name="Element Should Be Visible" owner="AppiumLibrary">
+<msg time="2024-05-29T15:42:19.769703" level="INFO">xpath criteria: //android.view.View[@content-desc="Pagar"]</msg>
+<arg>${BUTTON_PAGAR}</arg>
+<doc>Verifies that element identified with locator is visible.</doc>
+<status status="PASS" start="2024-05-29T15:42:19.723675" elapsed="0.046028"/>
+</kw>
+<kw name="Element Should Be Visible" owner="AppiumLibrary">
+<msg time="2024-05-29T15:42:19.815151" level="INFO">xpath criteria: //android.view.View[@content-desc="Transferir"]</msg>
+<arg>${BUTTON_TRANSFERIR}</arg>
+<doc>Verifies that element identified with locator is visible.</doc>
+<status status="PASS" start="2024-05-29T15:42:19.769703" elapsed="0.045448"/>
+</kw>
+<kw name="Element Should Be Visible" owner="AppiumLibrary">
+<msg time="2024-05-29T15:42:19.860740" level="INFO">xpath criteria: //android.view.View[@content-desc="Depositar"]</msg>
+<arg>${BUTTON_DEPOSITAR}</arg>
+<doc>Verifies that element identified with locator is visible.</doc>
+<status status="PASS" start="2024-05-29T15:42:19.815151" elapsed="0.045589"/>
+</kw>
+<kw name="Element Should Be Visible" owner="AppiumLibrary">
+<msg time="2024-05-29T15:42:19.905830" level="INFO">xpath criteria: //android.view.View[@content-desc="Empréstimos"]</msg>
+<arg>${BUTTON_EMPRESTIMOS}</arg>
+<doc>Verifies that element identified with locator is visible.</doc>
+<status status="PASS" start="2024-05-29T15:42:19.860740" elapsed="0.045090"/>
+</kw>
+<kw name="Element Should Be Visible" owner="AppiumLibrary">
+<msg time="2024-05-29T15:42:19.948830" level="INFO">xpath criteria: //android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[2]</msg>
+<arg>${BUTTON_RECARGA}</arg>
+<doc>Verifies that element identified with locator is visible.</doc>
+<status status="PASS" start="2024-05-29T15:42:19.905830" elapsed="0.043000"/>
+</kw>
+<kw name="Element Should Be Visible" owner="AppiumLibrary">
+<msg time="2024-05-29T15:42:19.990285" level="INFO">xpath criteria: //android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]</msg>
+<arg>${BUTTON_DOACAO}</arg>
+<doc>Verifies that element identified with locator is visible.</doc>
+<status status="PASS" start="2024-05-29T15:42:19.948830" elapsed="0.041455"/>
+</kw>
+<kw name="Element Should Be Visible" owner="AppiumLibrary">
+<msg time="2024-05-29T15:42:20.030703" level="INFO">xpath criteria: //android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[5]</msg>
+<arg>${BUTTON_ATALHOS}</arg>
+<doc>Verifies that element identified with locator is visible.</doc>
+<status status="PASS" start="2024-05-29T15:42:19.990285" elapsed="0.040418"/>
+</kw>
+<kw name="Element Should Be Visible" owner="AppiumLibrary">
+<msg time="2024-05-29T15:42:20.068788" level="INFO">xpath criteria: //android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[3]</msg>
+<arg>${BUTTON_COBRAR}</arg>
+<doc>Verifies that element identified with locator is visible.</doc>
+<status status="PASS" start="2024-05-29T15:42:20.030703" elapsed="0.038085"/>
+</kw>
+<status status="PASS" start="2024-05-29T15:42:19.671090" elapsed="0.397698"/>
+</kw>
+<kw name="Teardown" owner="config" type="TEARDOWN">
+<kw name="Run Keyword If Test Failed" owner="BuiltIn">
+<arg>Capture Page Screenshot</arg>
+<doc>Runs the given keyword with the given arguments, if the test failed.</doc>
+<status status="PASS" start="2024-05-29T15:42:20.069809" elapsed="0.000000"/>
+</kw>
+<kw name="Close All Applications" owner="AppiumLibrary">
+<doc>Closes all open applications.</doc>
+<status status="PASS" start="2024-05-29T15:42:20.070809" elapsed="0.453116"/>
+</kw>
+<status status="PASS" start="2024-05-29T15:42:20.069809" elapsed="0.454116"/>
+</kw>
+<status status="PASS" start="2024-05-29T15:42:09.845148" elapsed="10.679779"/>
+</test>
+<status status="PASS" start="2024-05-29T15:42:09.668863" elapsed="10.856064"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="telaInicial">telaInicial</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

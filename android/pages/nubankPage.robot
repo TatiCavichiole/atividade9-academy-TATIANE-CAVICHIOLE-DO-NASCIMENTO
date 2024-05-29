@@ -4,7 +4,7 @@ Resource    ../../base.robot
 
 
 *** Variables ***
-${TELA_INICIAL}              xphath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View
+${TELA_INICIAL}              xpath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View
 ${BUTTON_PERFIL}             xpath=//android.widget.ScrollView/android.view.View[1]
 ${BUTTON_OCULTAR_SALDO}      xpath=//android.widget.ScrollView/android.widget.Button[1]
 ${BUTTON__DUVIDAS}           xpath=//android.widget.ScrollView/android.widget.Button[2]
@@ -16,10 +16,10 @@ ${BUTTON_INVEST_CONHECER}    xpath=//android.view.View[@content-desc="Conhecer"]
 ${BUTTON_TRANSFERIR}         xpath=//android.view.View[@content-desc="Transferir"]
 ${BUTTON_DEPOSITAR}          xpath=//android.view.View[@content-desc="Depositar"]
 ${BUTTON_EMPRESTIMOS}        xpath=//android.view.View[@content-desc="Empréstimos"]
-${BUTTON_RECARGA}            xpath=//android.view.View[contains(@content-desc,"Recarga")]
-${BUTTON_COBRAR}             xpath=//android.view.View[@content-desc="Cobrar"]
-${BUTTON_DOACAO}             xpath=//android.view.View[@content-desc="Doação"]
-${BUTTON_ATALHOS}            xpath=//android.view.View[contains(@content-desc,"Encontrar atalhos")]
+${BUTTON_RECARGA}            xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[2]
+${BUTTON_COBRAR}             xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[3]
+${BUTTON_DOACAO}             xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
+${BUTTON_ATALHOS}            xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[5]
 ${BUTTON_DICA}               xpath=//android.view.View[contains(@content-desc,"Dica")]
 ${CARD_MEUS_CARTOES}         xpath=//android.view.View[@content-desc="Meus cartões"]
 ${CARD_EMPRESTIMO_DISP}      xpath=//android.view.View[@content-desc="Você tem R$ 10.000,00 disponíveis para empréstimo."]
@@ -36,10 +36,23 @@ ${CARROSSEL_01}              xpath=//android.widget.ScrollView/android.widget.Ho
 ${CARROSSEL_02}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[2]
 ${CARROSSEL_03}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[3]
 ${CARROSSEL_04}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
-
+${MENU_CARROSSEL}            xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]
 
 *** Keywords ***
 
 Dado que o usuário está na tela inicial do aplicativo
     Wait Until Element Is Visible    ${TELA_INICIAL}    timeout=10s
     Element Should Be Visible    ${BUTTON_PERFIL}
+
+Quando o usuário visualizar o menu carrossel
+    Wait Until Element Is Visible    ${MENU_CARROSSEL}
+Então os atalhos "Pix", "Pagar", "Transferir", "Depositar", "Emprestimos", "Recarga celular", "Cobrar", "Doação" e "Encontar atalhos" devem estar presentes
+    Element Should Be Visible    ${BUTTON_PIX} 
+    Element Should Be Visible    ${BUTTON_PAGAR} 
+    Element Should Be Visible    ${BUTTON_TRANSFERIR}
+    Element Should Be Visible    ${BUTTON_DEPOSITAR}
+    Element Should Be Visible    ${BUTTON_EMPRESTIMOS}
+    Element Should Be Visible    ${BUTTON_RECARGA}
+    Element Should Be Visible    ${BUTTON_DOACAO}
+    Element Should Be Visible    ${BUTTON_ATALHOS}
+    Element Should Be Visible    ${BUTTON_COBRAR}
