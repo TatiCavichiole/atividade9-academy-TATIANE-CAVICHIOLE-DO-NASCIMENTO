@@ -21,6 +21,7 @@ ${BUTTON_COBRAR}             xpath=//android.widget.ScrollView/android.widget.Ho
 ${BUTTON_DOACAO}             xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
 ${BUTTON_ATALHOS}            xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[5]
 ${BUTTON_DICA}               xpath=//android.view.View[contains(@content-desc,"Dica")]
+${BUTTON_INDICAR_AMIGOS}     xpath=//android.widget.Button[@content-desc="INDICAR AMIGOS"]
 ${CARD_MEUS_CARTOES}         xpath=//android.view.View[@content-desc="Meus cartões"]
 ${CARD_EMPRESTIMO_DISP}      xpath=//android.view.View[@content-desc="Você tem R$ 10.000,00 disponíveis para empréstimo."]
 ${CARD_GUARDAR_DINHEIRO}     xpath=//android.view.View[@content-desc="Conquiste planos futuros: conheça as opções para guardar dinheiro."]
@@ -39,6 +40,8 @@ ${CARROSSEL_03}              xpath=//android.widget.ScrollView/android.widget.Ho
 ${CARROSSEL_04}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
 ${MENU_CARROSSEL}            xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]
 ${TELA_CONVITE}              xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
+${DESCUBRA_MAIS_2}           xpath=//android.view.View[contains(@content-desc,"Indique seus amigos")]
+${PAGINA_DESCUBRA_MAIS}      xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
 
 
 *** Keywords ***
@@ -95,4 +98,19 @@ Então deverá ser redirecionado para tela de convite
     Wait Until Element Is Visible   ${TELA_CONVITE}  
     Verifica se contem o text no content-desc   ${TELA_CONVITE}    Resgate seus amigos da fila do banco
 
+
+Então deverá exibir o botao de duvidas
+   Wait Until Element Is Visible   ${BUTTON__DUVIDAS}
+ 
+Quando o usuário clicar em uma notificação
+   Swipe By Percent    50    90    50    5
+   Espera o elemento e faz o click    ${DESCUBRA_MAIS_2} 
+
+Então deverá ser direcionado para a tela de notificações
+   Page Should Contain Element    ${PAGINA_DESCUBRA_MAIS}
+   Verifica se contem o text no content-desc    ${PAGINA_DESCUBRA_MAIS}   Resgate seus amigos da fila do banco 
     
+ E as notificações devem ser exibidas    
+    Wait Until Element Is Visible    ${PAGINA_DESCUBRA_MAIS}
+    Page Should Contain Element    ${PAGINA_DESCUBRA_MAIS}
+    Verifica se contem o text no content-desc   ${PAGINA_DESCUBRA_MAIS}    Resgate seus amigos da fila do banco 

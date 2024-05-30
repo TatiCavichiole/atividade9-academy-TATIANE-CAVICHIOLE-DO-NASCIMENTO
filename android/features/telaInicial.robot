@@ -34,7 +34,7 @@ CT007 - Deve exibir o botao de duvidas na tela inicial
     Quando o usuário visualizar a tela inicial
     Então deverá exibir o botao de duvidas
            
-CT008 - Deve exibir notificações na tela inicial
+CT008 - Deve exibir a opçao de Decubra mais na tela inicial
     Quando o usuário clicar em uma notificação
     Então deverá ser direcionado para a tela de notificações
     E as notificações devem ser exibidas

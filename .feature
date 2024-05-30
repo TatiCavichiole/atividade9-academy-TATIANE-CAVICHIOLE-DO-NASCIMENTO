@@ -31,7 +31,7 @@ Funcionalidade: Validar todos os atalhos do menu carrossel da homepage e botões
             Quando o usuário visualizar a tela inicial
             Então deverá exibir o botao de duvidas
            
-        Cenário: Deve exibir notificações na tela inicial
+        Cenário: Deve exibir a opçao de Decubra mais na tela inicial
             Quando o usuário clicar em uma notificação
             Então deverá ser direcionado para a tela de notificações
             E as notificações devem ser exibidas
