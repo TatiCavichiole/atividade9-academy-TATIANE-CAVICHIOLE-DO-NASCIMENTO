@@ -22,6 +22,7 @@ ${BUTTON_COBRAR}             xpath=//android.widget.ScrollView/android.widget.Ho
 ${BUTTON_DOACAO}             xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
 ${BUTTON_ATALHOS}            xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[5]
 ${BUTTON_DICA}               xpath=//android.view.View[contains(@content-desc,"Dica")]
+${BUTTON_NOVO_EMPRESTIMO}    xpath=//android.widget.Button[@content-desc="NOVO EMPRÉSTIMO"]
 ${BUTTON_INDICAR_AMIGOS}     xpath=//android.widget.Button[@content-desc="INDICAR AMIGOS"]
 ${CARD_MEUS_CARTOES}         xpath=//android.view.View[@content-desc="Meus cartões"]
 ${CARD_EMPRESTIMO_DISP}      xpath=//android.view.View[@content-desc="Você tem R$ 10.000,00 disponíveis para empréstimo."]
@@ -44,6 +45,7 @@ ${MENU_CARROSSEL_SALDO}      xpath=//android.widget.HorizontalScrollView
 ${TELA_DEPOSITAR}            xpath=//android.view.View[@content-desc="Como você quer depositar na sua conta do Nubank"]
 ${TELA_CONVITE}              xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
 ${TELA_SALDO}                xpath=//android.widget.ScrollView
+${TELA_EMPRESTIMO}           xpath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View[2]
 ${DESCUBRA_MAIS_2}           xpath=//android.view.View[contains(@content-desc,"Indique seus amigos")]
 ${PAGINA_DESCUBRA_MAIS}      xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
 ${DINHEIRO_GUARDADO}         xpath=//android.view.View[contains(@content-desc,"Dinheiro guardado")]
@@ -54,8 +56,8 @@ ${PIX_DEPOSITAR}             xpath=//android.view.View[contains(@content-desc,"P
 ${BOLETO_DEPOSITAR}          xpath=//android.view.View[contains(@content-desc,"Boleto")]
 ${TED_DEPOSITAR}             xpath=//android.view.View[contains(@content-desc,"TED/DOC")]
 ${SALARIO_DEPOSITAR}         xpath=//android.view.View[contains(@content-desc,"Trazer seu salário")]
-
-         
+${CARROSSEL_EMPRESTIMO}      xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
+${EMPRESTIMO_FUNCIONAMENTO}  xpath=//android.view.View[@content-desc="Entenda como funciona >"]         
 *** Keywords ***
 
 Dado que o usuário está na tela inicial do aplicativo
@@ -182,3 +184,16 @@ Então terá acesso a tela de informações da área Depositar
     Verifica se contem o text no content-desc
     ...    ${SALARIO_DEPOSITAR}
     ...    Receba todo mês direto aqui na sua conta, sem custo
+Quando o usuário acessar a tela de Empréstimo
+    Swipe By Percent    50    50    08    50
+    Wait Until Page Contains Element    ${CARROSSEL_01}
+    Click Element    ${CARROSSEL_EMPRESTIMO}
+Então os campos "Entenda como funciona" e "Novo emprestimo" devem estar presentes
+    Wait Until Page Contains Element    ${TELA_EMPRESTIMO}
+    Verifica se contem o text no content-desc
+    ...    ${EMPRESTIMO_FUNCIONAMENTO}
+    ...    Entenda como funciona >
+    Element Should Be Visible    ${BUTTON_NOVO_EMPRESTIMO}
+
+Então a mensagem de informação do valor disponivel para emprestimo deve estar visivel
+    

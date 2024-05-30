@@ -77,17 +77,34 @@ Funcionalidade: Validar a tela de Empréstimo e seus botões
     Como usuário do aplicativo
     Desejo solicitar um empréstimo
     Para obter crédito
-
-    Contexto: Acessar a tela de Empréstimo
-        Dado que o usuário está na tela de Empréstimo
+      
 
         Cenário: Verificar campos de empréstimo
-            Quando o usuário acessar a tela de Empréstimo
-            Então os campos "Entenda como funciona" e "Novo emprestimo" devem estar presentes
+        Dado Dado que o usuário está na tela inicial do aplicativo
+        Quando o usuário acessar a tela de Empréstimo
+        Então os campos "Entenda como funciona" e "Novo emprestimo" devem estar presentes
 
         Cenário: Verificar o valor disponivel para emprestimo
             Quando o usuário acessar a tela de Empréstimo
             Então a mensagem de informação do valor disponivel para emprestimo deve estar visivel
+
+
+        Cenario: Deve exibir mensagem informando que o valor do empréstimo pode mudar
+            Quando o usuário acessar a tela de Empréstimo
+            Então visualizará a mensagem informando que o valor do empréstimo pode mudar
+
+        Cenario: Deve exibir um link com a mensagem Entenda como funciona
+            Quando o usuário acessar a tela de Empréstimo
+            Então visualizará o link com a mensagem: Entenda como funciona
+
+        Cenario: Deve exibir um botão de Novo Empréstimo
+            Quando o usuário acessar a tela de Empréstimo
+            Então deve visualizar o botão de Novo Empréstimo
+
+        Cenario: Deve ser possível fechar a tela de Empréstimos com o botão X no canto superior esquerdo da tela
+            Quando o usuário acessar a tela de Empréstimo
+            E executar o botão X "fechar" localizado no canto superior esquerdo da tela
+            Então o usuário deverá ser redirecionado para tela inical
 
 
 Funcionalidade: Validar a tela de Cartão de crédito e seus botões
