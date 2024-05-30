@@ -2,6 +2,7 @@
 
 Resource    ../../base.robot
 
+Library    XML
 
 *** Variables ***
 ${TELA_INICIAL}              xpath=//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View
@@ -39,13 +40,15 @@ ${CARROSSEL_02}              xpath=//android.widget.ScrollView/android.widget.Ho
 ${CARROSSEL_03}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[3]
 ${CARROSSEL_04}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
 ${MENU_CARROSSEL}            xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]
+${MENU_CARROSSEL_SALDO}      xpath=//android.widget.HorizontalScrollView
 ${TELA_CONVITE}              xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
+${TELA_SALDO}                xpath=//android.widget.ScrollView
 ${DESCUBRA_MAIS_2}           xpath=//android.view.View[contains(@content-desc,"Indique seus amigos")]
 ${PAGINA_DESCUBRA_MAIS}      xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
 ${DINHEIRO_GUARDADO}         xpath=//android.view.View[contains(@content-desc,"Dinheiro guardado")]
-${SALDO_CONTA}               xpath=//android.view.View[@content-desc="R$ 181,79"]
-
-
+${SALDO_CONTA}               xpath=//android.view.View[contains(@content-desc,"R$ 181,79")]
+${SALDO_ESPERADO}            R$ 181,79
+${HISTORICO}                 xpath=//android.view.View[@content-desc="Histórico"]
 
 *** Keywords ***
 
@@ -119,19 +122,27 @@ E as notificações devem ser exibidas
     Verifica se contem o text no content-desc   ${PAGINA_DESCUBRA_MAIS}    Resgate seus amigos da fila do banco 
 
 
-Dado que o usuário está na tela de saldo e histórico da conta
+Dado que o usuário acessa a tela de saldo e histórico da conta
     Click Element    ${CONTA_E_SALDO}
-
+    
 
 Quando o usuário visualizar a tela de saldo
-    Page Should Contain Element    ${CONTA_E_SALDO}
-    Verifica se contem o text no content-desc   ${SALDO_CONTA}    R$ 181,79
-    
-    
+    Wait Until Element Is Visible    ${TELA_SALDO}
+    Element Should Be Visible    ${TELA_SALDO}
 
 Então o saldo da conta deve ser exibido corretamente
-    [Arguments]    ${saldo_esperado}
-    ${saldo_exibido}=    Get Text    ${SALDO_CONTA}
-    Should Be Equal    ${saldo_exibido}    ${saldo_esperado}
-    Verifica se contem o text no content-desc   ${SALDO_CONTA}    R$ 181,79
+  [Arguments]    ${saldo_esperado}
+    Element Attribute Should Match    ${SALDO_CONTA}    content-desc    ${saldo_esperado}    regexp=true
+
+Então as transações recentes devem ser exibidas corretamente
+    Wait Until Element Is Visible    ${HISTORICO}
+    Verifica se contem o text no content-desc   ${HISTORICO}    Histórico
+
+Então os botões "Depositar", "Pagar", "Transferir", "Emprestimos", e "Cobrar" devem estar presentes e funcionais
+    Page Should Contain Element    ${MENU_CARROSSEL_SALDO}
+    Element Should Be Visible    ${BUTTON_DEPOSITAR} 
+    Element Should Be Visible    ${BUTTON_PAGAR}
+    Element Should Be Visible    ${BUTTON_TRANSFERIR}  
+    Element Should Be Visible    ${BUTTON_EMPRESTIMOS}
+    Element Should Be Visible    ${BUTTON_COBRAR}
     
