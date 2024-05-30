@@ -13,7 +13,7 @@ CT009 - Acessar a tela de saldo e histórico da conta
 CT010 - Verificar saldo da conta
     Dado que o usuário acessa a tela de saldo e histórico da conta
     Quando o usuário visualizar a tela de saldo
-    Então o saldo da conta deve ser exibido corretamente    ${SALDO_ESPERADO}
+    Então o saldo da conta deve ser exibido corretamente 
     
 
 CT011 - Verificar histórico da conta

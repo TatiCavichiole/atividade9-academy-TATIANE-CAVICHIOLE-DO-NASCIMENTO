@@ -41,6 +41,7 @@ ${CARROSSEL_03}              xpath=//android.widget.ScrollView/android.widget.Ho
 ${CARROSSEL_04}              xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
 ${MENU_CARROSSEL}            xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]
 ${MENU_CARROSSEL_SALDO}      xpath=//android.widget.HorizontalScrollView
+${TELA_DEPOSITAR}            xpath=//android.view.View[@content-desc="Como você quer depositar na sua conta do Nubank"]
 ${TELA_CONVITE}              xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
 ${TELA_SALDO}                xpath=//android.widget.ScrollView
 ${DESCUBRA_MAIS_2}           xpath=//android.view.View[contains(@content-desc,"Indique seus amigos")]
@@ -49,7 +50,12 @@ ${DINHEIRO_GUARDADO}         xpath=//android.view.View[contains(@content-desc,"D
 ${SALDO_CONTA}               xpath=//android.view.View[contains(@content-desc,"R$ 181,79")]
 ${SALDO_ESPERADO}            R$ 181,79
 ${HISTORICO}                 xpath=//android.view.View[@content-desc="Histórico"]
+${PIX_DEPOSITAR}             xpath=//android.view.View[contains(@content-desc,"Pix")]
+${BOLETO_DEPOSITAR}          xpath=//android.view.View[contains(@content-desc,"Boleto")]
+${TED_DEPOSITAR}             xpath=//android.view.View[contains(@content-desc,"TED/DOC")]
+${SALARIO_DEPOSITAR}         xpath=//android.view.View[contains(@content-desc,"Trazer seu salário")]
 
+         
 *** Keywords ***
 
 Dado que o usuário está na tela inicial do aplicativo
@@ -124,15 +130,13 @@ E as notificações devem ser exibidas
 
 Dado que o usuário acessa a tela de saldo e histórico da conta
     Click Element    ${CONTA_E_SALDO}
-    
 
 Quando o usuário visualizar a tela de saldo
     Wait Until Element Is Visible    ${TELA_SALDO}
     Element Should Be Visible    ${TELA_SALDO}
 
 Então o saldo da conta deve ser exibido corretamente
-  [Arguments]    ${saldo_esperado}
-    Element Attribute Should Match    ${SALDO_CONTA}    content-desc    ${saldo_esperado}    regexp=true
+  Verifica se contem o text no content-desc   ${SALDO_CONTA}    R$ 181,79
 
 Então as transações recentes devem ser exibidas corretamente
     Wait Until Element Is Visible    ${HISTORICO}
@@ -146,3 +150,35 @@ Então os botões "Depositar", "Pagar", "Transferir", "Emprestimos", e "Cobrar" 
     Element Should Be Visible    ${BUTTON_EMPRESTIMOS}
     Element Should Be Visible    ${BUTTON_COBRAR}
     
+Quando acessar a funcionalidade Depositar
+    Click Element    ${CARROSSEL_04}
+
+Então terá acesso a tela de informações da área Depositar
+    Wait Until Element Is Visible    ${TELA_DEPOSITAR}
+    Verifica se contem o text no content-desc    ${TELA_DEPOSITAR}    Como você quer depositar na sua conta do Nubank
+
+ Então os campos "Pix", "Boleto", "TED/DOC" e "Trazer seu salario" devem estar presentes
+    Wait Until Element Is Visible    ${TELA_DEPOSITAR}
+    Element Should Be Visible    ${PIX_DEPOSITAR}
+    Verifica se contem o text no content-desc    ${PIX_DEPOSITAR}    Pix
+    Verifica se contem o text no content-desc
+    ...    ${PIX_DEPOSITAR}
+    ...    Sem custo e cai na hora, mesmo de madrugada e fim de semana
+       
+    Element Should Be Visible    ${BOLETO_DEPOSITAR}
+    Verifica se contem o text no content-desc    ${BOLETO_DEPOSITAR}    Boleto
+    Verifica se contem o text no content-desc
+    ...    ${BOLETO_DEPOSITAR}
+    ...    Boleto
+    
+    Element Should Be Visible    ${TED_DEPOSITAR}
+    Verifica se contem o text no content-desc    ${TED_DEPOSITAR}    TED/DOC
+    Verifica se contem o text no content-desc
+    ...    ${TED_DEPOSITAR}
+    ...    Pode ter custo e cai somente em horário comercial de dias úteis
+    
+    Element Should Be Visible    ${SALARIO_DEPOSITAR}
+    Verifica se contem o text no content-desc    ${SALARIO_DEPOSITAR}    Trazer seu salário
+    Verifica se contem o text no content-desc
+    ...    ${SALARIO_DEPOSITAR}
+    ...    Receba todo mês direto aqui na sua conta, sem custo
