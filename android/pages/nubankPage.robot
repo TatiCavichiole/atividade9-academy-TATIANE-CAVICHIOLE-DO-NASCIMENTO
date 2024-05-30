@@ -42,6 +42,9 @@ ${MENU_CARROSSEL}            xpath=//android.widget.ScrollView/android.widget.Ho
 ${TELA_CONVITE}              xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
 ${DESCUBRA_MAIS_2}           xpath=//android.view.View[contains(@content-desc,"Indique seus amigos")]
 ${PAGINA_DESCUBRA_MAIS}      xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
+${DINHEIRO_GUARDADO}         xpath=//android.view.View[contains(@content-desc,"Dinheiro guardado")]
+${SALDO_CONTA}               xpath=//android.view.View[@content-desc="R$ 181,79"]
+
 
 
 *** Keywords ***
@@ -49,7 +52,7 @@ ${PAGINA_DESCUBRA_MAIS}      xpath=//android.widget.ImageView[contains(@content-
 Dado que o usuário está na tela inicial do aplicativo
     Wait Until Element Is Visible    ${TELA_INICIAL}    timeout=10s
     Element Should Be Visible    ${BUTTON_PERFIL}
-
+    
 Quando o usuário visualizar o menu carrossel
     Wait Until Element Is Visible    ${MENU_CARROSSEL}
 
@@ -110,7 +113,25 @@ Então deverá ser direcionado para a tela de notificações
    Page Should Contain Element    ${PAGINA_DESCUBRA_MAIS}
    Verifica se contem o text no content-desc    ${PAGINA_DESCUBRA_MAIS}   Resgate seus amigos da fila do banco 
     
- E as notificações devem ser exibidas    
+E as notificações devem ser exibidas    
     Wait Until Element Is Visible    ${PAGINA_DESCUBRA_MAIS}
     Page Should Contain Element    ${PAGINA_DESCUBRA_MAIS}
     Verifica se contem o text no content-desc   ${PAGINA_DESCUBRA_MAIS}    Resgate seus amigos da fila do banco 
+
+
+Dado que o usuário está na tela de saldo e histórico da conta
+    Click Element    ${CONTA_E_SALDO}
+
+
+Quando o usuário visualizar a tela de saldo
+    Page Should Contain Element    ${CONTA_E_SALDO}
+    Verifica se contem o text no content-desc   ${SALDO_CONTA}    R$ 181,79
+    
+    
+
+Então o saldo da conta deve ser exibido corretamente
+    [Arguments]    ${saldo_esperado}
+    ${saldo_exibido}=    Get Text    ${SALDO_CONTA}
+    Should Be Equal    ${saldo_exibido}    ${saldo_esperado}
+    Verifica se contem o text no content-desc   ${SALDO_CONTA}    R$ 181,79
+    
