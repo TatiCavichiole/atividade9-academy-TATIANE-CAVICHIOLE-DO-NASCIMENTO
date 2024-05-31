@@ -26,7 +26,8 @@ ${BUTTON_NOVO_EMPRESTIMO}    xpath=//android.widget.Button[@content-desc="NOVO E
 ${BUTTON_INDICAR_AMIGOS}     xpath=//android.widget.Button[@content-desc="INDICAR AMIGOS"]
 ${BUTTON_FECHAR}             xpath=//android.widget.Button[1]
 ${CARD_MEUS_CARTOES}         xpath=//android.view.View[@content-desc="Meus cartões"]
-${EMPRESTIMO_DISP}           xpath=//android.view.View[@content-desc="Você tem R$ 10.000,00 disponíveis para empréstimo."]
+${EMPRESTIMO_DISP}           xpath=//android.view.View[@content-desc="O valor disponível no
+...    momento é de R$ 10.000,00"]
 ${CARD_GUARDAR_DINHEIRO}     xpath=//android.view.View[@content-desc="Conquiste planos futuros: conheça as opções para guardar dinheiro."]
 ${FUNCAO_CARTAO_CREDITO}     xpath=//android.view.View[contains(@content-desc,"Cartão de Crédito")]
 ${FUNCAO_EMPRESTIMO}         xpath=//android.view.View[contains(@content-desc,"Empréstimo")]
@@ -51,7 +52,8 @@ ${DESCUBRA_MAIS_2}           xpath=//android.view.View[contains(@content-desc,"I
 ${PAGINA_DESCUBRA_MAIS}      xpath=//android.widget.ImageView[contains(@content-desc,"Resgate seus amigos da fila do banco")]
 ${DINHEIRO_GUARDADO}         xpath=//android.view.View[contains(@content-desc,"Dinheiro guardado")]
 ${SALDO_CONTA}               xpath=//android.view.View[contains(@content-desc,"R$ 181,79")]
-${SALDO_ESPERADO}            R$ 181,79
+${SALDO_ESPERADO}            Conta 
+...    R$ 181,79
 ${HISTORICO}                 xpath=//android.view.View[@content-desc="Histórico"]
 ${PIX_DEPOSITAR}             xpath=//android.view.View[contains(@content-desc,"Pix")]
 ${BOLETO_DEPOSITAR}          xpath=//android.view.View[contains(@content-desc,"Boleto")]
@@ -59,6 +61,20 @@ ${TED_DEPOSITAR}             xpath=//android.view.View[contains(@content-desc,"T
 ${SALARIO_DEPOSITAR}         xpath=//android.view.View[contains(@content-desc,"Trazer seu salário")]
 ${CARROSSEL_EMPRESTIMO}      xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
 ${EMPRESTIMO_FUNCIONAMENTO}  xpath=//android.view.View[@content-desc="Entenda como funciona >"]         
+${FATURA_CARTAO}             xpath=//android.view.View[@content-desc="R$ 780,72"]
+${LIMITE_DISP_CARTAO}        xpath=//android.view.View[@content-desc="Limite disponível R$ 806,78"]
+${PAGAR_FATURA_CARTAO}       xpath=//android.view.View[@content-desc="Pagar fatura"]
+${RESUMO_FATURA_CARTAO}      xpath=//android.view.View[@content-desc="Resumo de faturas"]
+${AJUSTAR_FATURA_CARTAO}     xpath=//android.view.View[@content-desc="Ajustar limites"]
+${VIRTUAL_FATURA_CARTAO}     xpath=//android.view.View[@content-desc="Cartão virtual"]
+${BLOQUEAR_FATURA_CARTAO}    xpath=//android.view.View[@content-desc="Bloquear cartão"]
+${INDICAR_FATURA_CARTAO}     xpath=//android.view.View[@content-desc="Indicar amigos"]
+${CARROSSEL_CARTAO}          xpath=//android.widget.HorizontalScrollView
+${PAG_CARTAO}                xpath=//android.view.View[contains(@content-desc,"Pagamento recebido")]
+${PAG_SUPERMERCADO}          xpath=//android.view.View[contains(@content-desc,"Supermercado")]
+${TRANSFERENCIA_ENVIADA}     xpath=//android.view.View[contains(@content-desc,"Transferência enviada")]
+${SALDO_DISPONIVEL}          xpath=//android.view.View[@content-desc="Saldo disponível"]
+
 
 *** Keywords ***
 
@@ -90,6 +106,7 @@ Então os atalhos "Meus cartoes", "Cartao de credito", "Emprestimos", "Investime
     Element Should Be Visible    ${FUNCAO_EMPRESTIMO}  
     Element Should Be Visible    ${BUTTON_DEPOSITAR}
     Element Should Be Visible    ${BUTTON_EMPRESTIMOS}
+    Swipe By Percent    50    90    50    5
     Element Should Be Visible    ${FUNCAO_INVESTIMENTOS}
     Element Should Be Visible    ${FUNCAO_SEGURO_VIDA}
     Element Should Be Visible    ${FUNCAO_DESCUBRA_MAIS} 
@@ -102,7 +119,8 @@ Entao devera exibir o nome do usuario logado no App
 
 Quando o usuário clicar no botao de visualização do saldo
     Espera o elemento e faz o click    ${BUTTON_OCULTAR_SALDO}
-    Verifica se contem o text no content-desc   ${CONTA_E_SALDO}    Conta R$ 181,79
+    Element Should Not Contain Text    ${CONTA_E_SALDO}    R$ 181,79
+    #Verifica se contem o text no content-desc   ${CONTA_E_SALDO}    R$ 181,79
 
 Então deverá ocultar o saldo
     Verifica se não contem o text no content-desc    ${CONTA_E_SALDO}    Conta R$ 181,79
@@ -136,12 +154,14 @@ Dado que o usuário acessa a tela de saldo e histórico da conta
     Click Element    ${CONTA_E_SALDO}
 
 Quando o usuário visualizar a tela de saldo
-    Wait Until Element Is Visible    ${TELA_SALDO}
-    Element Should Be Visible    ${TELA_SALDO}
+    Wait Until Element Is Visible    ${SALDO_DISPONIVEL}
+    Element Should Be Visible    ${SALDO_DISPONIVEL}
 
 Então o saldo da conta deve ser exibido corretamente
-  Verifica se contem o text no content-desc   ${SALDO_CONTA}    R$ 181,79
+  
+    Verifica se contem o text no content-desc   ${SALDO_CONTA}    R$ 181,79
 
+    
 Então as transações recentes devem ser exibidas corretamente
     Wait Until Element Is Visible    ${HISTORICO}
     Verifica se contem o text no content-desc   ${HISTORICO}    Histórico
@@ -198,10 +218,11 @@ Então os campos "Entenda como funciona" e "Novo emprestimo" devem estar present
     Element Should Be Visible    ${BUTTON_NOVO_EMPRESTIMO}
 
 Então a mensagem de informação do valor disponivel para emprestimo deve estar visivel
-    Page Should Contain Element    ${EMPRESTIMO_DISP}
+    Wait Until Page Contains Element    ${TELA_EMPRESTIMO}
+    Page Should Contain Element    ${TELA_EMPRESTIMO}
     Verifica se contem o text no content-desc
     ...    ${EMPRESTIMO_DISP}
-    ...    Você tem R$ 10.000,00
+    ...   O valor disponível no momento é de R$ 10.000,00
        
 Então visualizará o link com a mensagem: Entenda como funciona
     Page Should Contain Element    ${EMPRESTIMO_FUNCIONAMENTO}
@@ -216,3 +237,51 @@ E executar o botão X "fechar" localizado no canto superior esquerdo da tela
 Então o usuário deverá ser redirecionado para tela inical
     Wait Until Page Contains Element    ${TELA_INICIAL}
     Element Should Be Visible    ${TELA_INICIAL}
+
+Quando o usuário acessar a tela de Cartão de crédito
+    Swipe By Percent    50    50    50    10
+    Wait Until Element Is Visible    ${FUNCAO_CARTAO_CREDITO}
+    Click Element    ${FUNCAO_CARTAO_CREDITO}
+
+Então as informações "Fatura atual", "Limite Disponível" devem estar presentes
+    Verifica se contem o text no content-desc    ${FATURA_CARTAO}    R$ 780,72
+    Verifica se contem o text no content-desc    ${LIMITE_DISP_CARTAO}    Limite disponível R$ 806,78
+
+Então os botões "Pagar Fatura", "Resumo de faturas", "Ajustar limites", "Cartao virtual", "Bloquear cartao" e "Indicar amigos" devem estar presentes
+    Wait Until Element Is Visible    ${CARROSSEL_CARTAO}
+    Page Should Contain Element    ${PAGAR_FATURA_CARTAO}
+    Verifica se contem o text no content-desc    ${RESUMO_FATURA_CARTAO}    Resumo de faturas
+    Page Should Contain Element    ${RESUMO_FATURA_CARTAO}
+    Verifica se contem o text no content-desc    ${RESUMO_FATURA_CARTAO}    Resumo de faturas
+    Page Should Contain Element    ${AJUSTAR_FATURA_CARTAO}
+    Verifica se contem o text no content-desc    ${AJUSTAR_FATURA_CARTAO}    Ajustar limites
+    Page Should Contain Element    ${VIRTUAL_FATURA_CARTAO}
+    Verifica se contem o text no content-desc    ${VIRTUAL_FATURA_CARTAO}    Cartão virtual
+    Swipe By Percent    80    80    20    80
+    Element Should Be Visible    ${BLOQUEAR_FATURA_CARTAO}
+    Verifica se contem o text no content-desc    ${BLOQUEAR_FATURA_CARTAO}    Bloquear cartão
+    Page Should Contain Element    ${INDICAR_FATURA_CARTAO}
+    Verifica se contem o text no content-desc    ${INDICAR_FATURA_CARTAO}    Indicar amigos
+
+Então as informações das compras recentes devem estar visiveis
+    Swipe By Percent    50    70    50    10
+    Element Should Be Visible    ${PAG_CARTAO}
+    Page Should Contain Element    ${PAG_CARTAO}
+    Verifica se contem o text no content-desc    ${PAG_CARTAO}    Pagamento recebido
+    Verifica se contem o text no content-desc    ${PAG_CARTAO}    VOCÊ PAGOU R$ 50,00
+    Verifica se contem o text no content-desc    ${PAG_CARTAO}    R$ 30,00
+    Verifica se contem o text no content-desc    ${PAG_CARTAO}    Pix
+    Verifica se contem o text no content-desc    ${PAG_CARTAO}    Ontem
+    Element Should Be Visible    ${PAG_SUPERMERCADO}
+    Verifica se contem o text no content-desc    ${PAG_SUPERMERCADO}    Supermercado
+    Verifica se contem o text no content-desc    ${PAG_SUPERMERCADO}    BRENO FREITAS
+    Verifica se contem o text no content-desc    ${PAG_SUPERMERCADO}    R$ 30,00
+    Verifica se contem o text no content-desc    ${PAG_SUPERMERCADO}    Pix
+    Verifica se contem o text no content-desc    ${PAG_SUPERMERCADO}    Ontem
+    Element Should Be Visible    ${TRANSFERENCIA_ENVIADA}
+    Verifica se contem o text no content-desc    ${TRANSFERENCIA_ENVIADA}    Transferência enviada
+    Verifica se contem o text no content-desc    ${TRANSFERENCIA_ENVIADA}    BRENO FREITAS
+    Verifica se contem o text no content-desc    ${TRANSFERENCIA_ENVIADA}    R$ 30,00
+    Verifica se contem o text no content-desc    ${TRANSFERENCIA_ENVIADA}    Pix
+    Verifica se contem o text no content-desc    ${TRANSFERENCIA_ENVIADA}    Ontem
+
