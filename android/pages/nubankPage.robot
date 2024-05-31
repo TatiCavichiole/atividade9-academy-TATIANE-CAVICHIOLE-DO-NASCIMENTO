@@ -24,8 +24,9 @@ ${BUTTON_ATALHOS}            xpath=//android.widget.ScrollView/android.widget.Ho
 ${BUTTON_DICA}               xpath=//android.view.View[contains(@content-desc,"Dica")]
 ${BUTTON_NOVO_EMPRESTIMO}    xpath=//android.widget.Button[@content-desc="NOVO EMPRÉSTIMO"]
 ${BUTTON_INDICAR_AMIGOS}     xpath=//android.widget.Button[@content-desc="INDICAR AMIGOS"]
+${BUTTON_FECHAR}             xpath=//android.widget.Button[1]
 ${CARD_MEUS_CARTOES}         xpath=//android.view.View[@content-desc="Meus cartões"]
-${CARD_EMPRESTIMO_DISP}      xpath=//android.view.View[@content-desc="Você tem R$ 10.000,00 disponíveis para empréstimo."]
+${EMPRESTIMO_DISP}           xpath=//android.view.View[@content-desc="Você tem R$ 10.000,00 disponíveis para empréstimo."]
 ${CARD_GUARDAR_DINHEIRO}     xpath=//android.view.View[@content-desc="Conquiste planos futuros: conheça as opções para guardar dinheiro."]
 ${FUNCAO_CARTAO_CREDITO}     xpath=//android.view.View[contains(@content-desc,"Cartão de Crédito")]
 ${FUNCAO_EMPRESTIMO}         xpath=//android.view.View[contains(@content-desc,"Empréstimo")]
@@ -58,6 +59,7 @@ ${TED_DEPOSITAR}             xpath=//android.view.View[contains(@content-desc,"T
 ${SALARIO_DEPOSITAR}         xpath=//android.view.View[contains(@content-desc,"Trazer seu salário")]
 ${CARROSSEL_EMPRESTIMO}      xpath=//android.widget.ScrollView/android.widget.HorizontalScrollView[1]/android.widget.Button[4]
 ${EMPRESTIMO_FUNCIONAMENTO}  xpath=//android.view.View[@content-desc="Entenda como funciona >"]         
+
 *** Keywords ***
 
 Dado que o usuário está na tela inicial do aplicativo
@@ -196,4 +198,21 @@ Então os campos "Entenda como funciona" e "Novo emprestimo" devem estar present
     Element Should Be Visible    ${BUTTON_NOVO_EMPRESTIMO}
 
 Então a mensagem de informação do valor disponivel para emprestimo deve estar visivel
-    
+    Page Should Contain Element    ${EMPRESTIMO_DISP}
+    Verifica se contem o text no content-desc
+    ...    ${EMPRESTIMO_DISP}
+    ...    Você tem R$ 10.000,00
+       
+Então visualizará o link com a mensagem: Entenda como funciona
+    Page Should Contain Element    ${EMPRESTIMO_FUNCIONAMENTO}
+    Verifica se contem o text no content-desc    ${EMPRESTIMO_FUNCIONAMENTO}    Entenda como funciona >
+
+Então deve visualizar o botão de Novo Empréstimo
+    Page Should Contain Element    ${BUTTON_NOVO_EMPRESTIMO}
+    Verifica se contem o text no content-desc    ${BUTTON_NOVO_EMPRESTIMO}    NOVO EMPRÉSTIMO
+
+E executar o botão X "fechar" localizado no canto superior esquerdo da tela
+    Click Element    ${BUTTON_FECHAR}
+Então o usuário deverá ser redirecionado para tela inical
+    Wait Until Page Contains Element    ${TELA_INICIAL}
+    Element Should Be Visible    ${TELA_INICIAL}
